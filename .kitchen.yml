@@ -1,0 +1,22 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: ubuntu-14.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[stats_ag::default]
+    data_bags_path: "test/integration/data_bags"
+    attributes:
+     stats_ag:
+      date_prefix_format: 'ISO8601'
+      metrics_dir: '/var/log/stats-ag/metrics/'
+      scripts_dir: '/opt/stats-ag/scripts'
+      log_file: '/var/log/stats-ag/status.log'
+

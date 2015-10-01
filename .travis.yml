@@ -1,0 +1,12 @@
+notifications:
+  email:
+    - devtools@lightspeedpos.com
+
+language: ruby
+cache: bundler
+rvm:
+  - 2.1
+
+script:
+  # - bundle exec rubocop
+  - bundle exec foodcritic -f any .

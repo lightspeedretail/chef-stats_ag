@@ -1,0 +1,11 @@
+DEPENDENCIES
+  stats_ag
+    path: .
+    metadata: true
+
+GRAPH
+  golang (1.5.1)
+  logrotate (1.8.0)
+  stats_ag (0.1.0)
+    golang (~> 1.5.1)
+    logrotate (~> 1.8.0)

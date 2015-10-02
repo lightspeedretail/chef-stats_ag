@@ -10,7 +10,7 @@ end
 
 include_recipe 'stats_ag::go'
 
-git "#{Chef::Config[:file_cache_path]}/stats-ag" do
+git "#{Chef::Config[:file_cache_path]}/stats-ag-#{node['stats_ag']['git_tag']}" do
   repository 'https://github.com/lightspeedretail/stats-ag.git'
   reference 'master'
   revision node['stats_ag']['git_tag']
@@ -49,23 +49,27 @@ node['stats_ag']['custom_scripts'].each do |script|
 end
 
 execute 'build & install stats-ag binary' do
-  cwd "#{Chef::Config[:file_cache_path]}/stats-ag"
+  cwd "#{Chef::Config[:file_cache_path]}/stats-ag-#{node['stats_ag']['git_tag']}"
   command <<-EOF
     export PATH=$PATH:#{node['go']['install_dir']}/go/bin:#{node['go']['gobin']}
     export GOPATH=#{node['go']['gopath']}
     export GOBIN=#{node['go']['gobin']}
     #{node['go']['install_dir']}/go/bin/go get github.com/shirou/gopsutil
-    #{node['go']['install_dir']}/go/bin/go build -o bin/stats-ag
-    cp bin/stats-ag #{node['stats_ag']['base_dir']}/stats-ag
+    #{node['go']['install_dir']}/go/bin/go build -o bin/stats-ag-#{node['stats_ag']['git_tag']}
+    mv bin/stats-ag-#{node['stats_ag']['git_tag']} #{node['stats_ag']['base_dir']}/stats-ag-#{node['stats_ag']['git_tag']}
+    unlink #{node['stats_ag']['base_dir']}/stats-ag  
+    unlink /usr/bin/stats-ag
+    ln -s #{node['stats_ag']['base_dir']}/stats-ag-#{node['stats_ag']['git_tag']} #{node['stats_ag']['base_dir']}/stats-ag
+    ln -s #{node['stats_ag']['base_dir']}/stats-ag-#{node['stats_ag']['git_tag']} /usr/bin/stats-ag
   EOF
   action :run
-  not_if { File.exist?("#{node['stats_ag']['base_dir']}/stats-ag") }
+  not_if { File.exist?("#{node['stats_ag']['base_dir']}/stats-ag-#{node['stats_ag']['git_tag']}") }
 end
 
 cron 'run stats-ag every minute' do
   hour '*'
   minute '*'
-  command "#{node['stats_ag']['base_dir']}/stats-ag -p #{node['stats_ag']['date_prefix_format']} -e 1 -m #{node['stats_ag']['metrics_dir']} -s #{node['stats_ag']['scripts_dir']} > #{node['stats_ag']['log_file']} 2>&1"
+  command "#{node['stats_ag']['base_dir']}/stats-ag -e 1 -m #{node['stats_ag']['metrics_dir']} -s #{node['stats_ag']['scripts_dir']} -p #{node['stats_ag']['date_prefix_format']} > #{node['stats_ag']['log_file']} 2>&1"
 end
 
 =begin

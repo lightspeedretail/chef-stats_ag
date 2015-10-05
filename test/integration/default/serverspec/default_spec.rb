@@ -16,11 +16,17 @@ context "the chef-stats_ag cookbook should have integration tests" do
   end
 
   describe command('crontab -l') do
-    its(:stdout) { should match %r{\* \* \* \* \* /opt/stats-ag/stats-ag -p ISO8601 -e 1 -m /var/log/stats-ag/metrics/ -s /opt/stats-ag/scripts > /var/log/stats-ag/status.log 2>&1} }
+    its(:stdout) { should match %r{\* \* \* \* \* /opt/stats-ag/stats-ag -e 1 -m /var/log/stats-ag/metrics/ -s /opt/stats-ag/scripts -p ISO8601 > /var/log/stats-ag/status.log 2>&1} }
   end
  
-  describe command('/opt/stats-ag/stats-ag -p ISO8601 -e 1 -m /tmp -s /opt/stats-ag/scripts') do
+    describe command('/opt/stats-ag/stats-ag -v') do
     its(:exit_status) { should eq 0 }
+    its(:stdout) { should match %r{Version 0\.1\.1} }
+  end
+
+  describe command('/opt/stats-ag/stats-ag -e 1 -m /tmp -s /opt/stats-ag/scripts -p ISO8601 -d 1') do
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should match %r{scripts_dir = /opt/stats-ag/scripts} }
   end
 
 end

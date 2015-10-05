@@ -55,7 +55,7 @@ execute 'build & install stats-ag binary' do
     export GOPATH=#{node['go']['gopath']}
     export GOBIN=#{node['go']['gobin']}
     #{node['go']['install_dir']}/go/bin/go get github.com/shirou/gopsutil
-    #{node['go']['install_dir']}/go/bin/go build -o bin/stats-ag-#{node['stats_ag']['git_tag']}
+    #{node['go']['install_dir']}/go/bin/go build -o bin/stats-ag-#{node['stats_ag']['git_tag']} -ldflags "-X main.BUILD_DATE `date +%Y-%m-%d` -X main.VERSION #{node['stats_ag']['git_tag']} -X main.COMMIT_SHA `git rev-parse --verify HEAD`"
     mv bin/stats-ag-#{node['stats_ag']['git_tag']} #{node['stats_ag']['base_dir']}/stats-ag-#{node['stats_ag']['git_tag']}
     unlink #{node['stats_ag']['base_dir']}/stats-ag  
     unlink /usr/bin/stats-ag
@@ -71,15 +71,6 @@ cron 'run stats-ag every minute' do
   minute '*'
   command "#{node['stats_ag']['base_dir']}/stats-ag -e 1 -m #{node['stats_ag']['metrics_dir']} -s #{node['stats_ag']['scripts_dir']} -p #{node['stats_ag']['date_prefix_format']} > #{node['stats_ag']['log_file']} 2>&1"
 end
-
-=begin
-Dir[File.join(node['stats_ag']['scripts_dir'], "/*")].each do |f|
-  parts = File.basename(f).split('.', 1)
-  if parts.length >= 1
-    metrics_list.push(parts[0])
-  end
-end
-=end
 
 metrics_list.each do |type|
   logrotate_app "stats-ag-#{type}" do

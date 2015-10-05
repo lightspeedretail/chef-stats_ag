@@ -1,6 +1,6 @@
 
 default['stats_ag']['git_tag'] = '0.1.1'
-default['stats_ag']['scripts_dir'] = '/opt/stats-ag/scripts' 
+default['stats_ag']['scripts_dir'] = '/opt/stats-ag/scripts/'
 default['stats_ag']['base_dir'] = '/opt/stats-ag'
 default['stats_ag']['metrics_dir'] = '/var/log/stats-ag/metrics/'
 default['stats_ag']['date_prefix_format'] = 'ISO8601'

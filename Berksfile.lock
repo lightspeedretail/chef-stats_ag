@@ -5,7 +5,7 @@ DEPENDENCIES
 
 GRAPH
   golang (1.5.1)
-  logrotate (1.8.0)
-  stats_ag (0.1.1)
+  logrotate (1.9.2)
+  stats_ag (0.1.2)
     golang (~> 1.5.1)
-    logrotate (~> 1.8.0)
+    logrotate (> 1.8.0)

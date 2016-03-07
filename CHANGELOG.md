@@ -1,6 +1,10 @@
 chef-stats\_ag CHANGELOG
 ===========================
 
+0.1.2
+-----
+- Updated logrotate dependency to > 1.8.0
+
 0.1.1
 -----
 - Updated to stats-ag 0.1.1

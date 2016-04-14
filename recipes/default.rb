@@ -62,7 +62,7 @@ execute 'build & install stats-ag binary' do
     if [ -e /usr/bin/stats-ag ]; then
       unlink /usr/bin/stats-ag
     fi
-    if [ -e /usr/bin/stats-ag ]; then
+    if [ -e #{node['stats_ag']['base_dir']}/stats-ag ]; then
       rm #{node['stats_ag']['base_dir']}/stats-ag && cp bin/stats-ag #{node['stats_ag']['base_dir']}/stats-ag
     else
       cp bin/stats-ag #{node['stats_ag']['base_dir']}/stats-ag

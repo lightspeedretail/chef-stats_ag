@@ -69,10 +69,12 @@ execute 'build & install stats-ag binary' do
     fi
     ln -s #{node['stats_ag']['base_dir']}/stats-ag /usr/bin/stats-ag
   EOF
+  only_if { `#{node['stats_ag']['base_dir']}/stats-ag -v | grep #{node['stats_ag']['git_tag']}` }
   action :run
 end
 
 cron 'run stats-ag every minute' do
+  action :delete if node['stats_ag']['enable'] == false 
   hour '*'
   minute '*'
   command "#{node['stats_ag']['base_dir']}/stats-ag -m #{node['stats_ag']['metrics_dir']} -s #{node['stats_ag']['scripts_dir']} -p #{node['stats_ag']['date_prefix_format']} > #{node['stats_ag']['log_file']} 2>&1"

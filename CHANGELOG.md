@@ -4,6 +4,8 @@ chef-stats\_ag CHANGELOG
 0.1.4
 -----
 - Fixed path error in build process
+- Updated to stats-ag 0.1.3
+- Added attribute `['stats_ag']['enable']` to allow enabling/disabling
 
 0.1.3
 -----

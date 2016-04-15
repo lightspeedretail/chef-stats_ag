@@ -57,7 +57,7 @@ execute 'build & install stats-ag binary' do
     export PATH=$PATH:#{node['go']['install_dir']}/go/bin:#{node['go']['gobin']}
     export GOPATH=#{node['go']['gopath']}
     export GOBIN=#{node['go']['gobin']}
-    #{node['go']['install_dir']}/go/bin/go get github.com/shirou/gopsutil
+    #{node['go']['install_dir']}/go/bin/go get -u github.com/shirou/gopsutil
     #{node['go']['install_dir']}/go/bin/go build -o bin/stats-ag -ldflags "-X main.BUILD_DATE `date +%Y-%m-%d` -X main.VERSION #{node['stats_ag']['git_tag']} -X main.COMMIT_SHA `git rev-parse --verify HEAD`"
     if [ -e /usr/bin/stats-ag ]; then
       unlink /usr/bin/stats-ag

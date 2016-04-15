@@ -1,6 +1,16 @@
 chef-stats\_ag CHANGELOG
 ===========================
 
+0.1.4
+-----
+- Fixed path error in build process
+- Updated to stats-ag 0.1.3
+- Added attribute `['stats_ag']['enable']` to allow enabling/disabling
+
+0.1.3
+-----
+- Updated to stats-ag 0.1.2 & and updated build script
+
 0.1.2
 -----
 - Updated logrotate dependency to > 1.8.0

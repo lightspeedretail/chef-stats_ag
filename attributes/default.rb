@@ -16,3 +16,4 @@ default['stats_ag']['metrics_rotate_frequency'] = 5
 default['stats_ag']['enable'] = true
 default['stats_ag']['ps_owner'] = 'root'
 default['stats_ag']['ps_group'] = 'root'
+default['stats_ag']['metrics_list'] = []

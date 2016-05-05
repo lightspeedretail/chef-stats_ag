@@ -21,7 +21,7 @@ context "the chef-stats_ag cookbook should have integration tests" do
  
     describe command('/usr/bin/stats-ag -v') do
     its(:exit_status) { should eq 0 }
-    its(:stdout) { should match %r{Version 0\.1\.2} }
+    its(:stdout) { should match %r{Version 0\.1\.3} }
   end
 
   describe command('/opt/stats-ag/stats-ag -m /tmp -s /opt/stats-ag/scripts -p ISO8601 -d 1') do

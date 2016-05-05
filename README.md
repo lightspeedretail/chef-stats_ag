@@ -89,5 +89,23 @@ Please note we plan on testing it with other platforms in the near future althou
     <td>The number of days worth of files for a given metric to keep</td>
     <td><tt>5</tt></td>
   </tr>
+  <tr>
+    <td><tt>['stats_ag']['install_from_source']</tt></td>
+    <td>Boolean</td>
+    <td>Whether or not to install from source or not</td>
+    <td><tt>true</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['stats_ag']['bin_location']</tt></td>
+    <td>String</td>
+    <td>URL of the stats-ag binary to install</td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['stats_ag']['bin_checksum']</tt></td>
+    <td>String</td>
+    <td>SHA256 checksum of the stats-ag binary to install</td>
+    <td><tt>nil</tt></td>
+  </tr>
 </table>
 
